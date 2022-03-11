@@ -9,7 +9,7 @@ class BookList extends StatelessWidget {
         title: Text('本一覧'),
         ),
       body: StreamBuilder<QuerySnapshot>(
-        stream: Firestore.instance.collection('books').snapshots(),
+        stream: FirebaseFirestore.instance.collection('books').snapshots(),
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (snapshot.hasError)
             return  Text('Error: ${snapshot.error}');
@@ -17,7 +17,7 @@ class BookList extends StatelessWidget {
             case ConnectionState.waiting: return  Text('Loading...');
             default:
               return  ListView(
-                children: snapshot.data?.documents.map((DocumentSnapshot document) {
+                children: snapshot.data!.docs.map((DocumentSnapshot document) {
                   return  ListTile(
                     title:  Text(document['title']),
                   );
